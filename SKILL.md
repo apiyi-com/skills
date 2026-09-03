@@ -31,7 +31,7 @@ metadata:
   model_registry: "https://docs.apiyi.com/model-registry.json"
   developer_kit: "https://docs.apiyi.com/developer-kit"
   cli: "npx apiyi@latest"
-  source_repo: "github.com/apiyi/skills"
+  source_repo: "github.com/apiyi-com/skills"
   last_reviewed: "2026-09-03"
   openclaw:
     emoji: "🔑"
@@ -142,7 +142,7 @@ Do this before any other call, and do it in this order:
 3. Self-check. Any of these three gives the same status enum:
 
    - CLI, no install needed (Node 18+): `npx apiyi@latest check`
-   - If this skill was installed from `github.com/apiyi/skills`, the bundled
+   - If this skill was installed from `github.com/apiyi-com/skills`, the bundled
      script: `python3 scripts/apiyi.py --check` (prints JSON)
    - Plain curl:
 
@@ -513,8 +513,8 @@ after the domain for English.
 
 - Developer kit overview (skills, CLI, contract, registry): `https://docs.apiyi.com/developer-kit`
 - Model registry (machine-readable IDs, endpoints, groups, prices): `https://docs.apiyi.com/model-registry.json`
-- Command line, zero install: `npx apiyi@latest check` (source `github.com/apiyi/cli`)
-- This skill with the self-check script and references: `github.com/apiyi/skills`
+- Command line, zero install: `npx apiyi@latest check` (source `github.com/apiyi-com/cli`)
+- This skill with the self-check script and references: `github.com/apiyi-com/skills`
 - Full page index for agents: `https://docs.apiyi.com/llms.txt`
 - Everything concatenated: `https://docs.apiyi.com/llms-full.txt`
 - Documentation MCP server: `https://docs.apiyi.com/mcp`

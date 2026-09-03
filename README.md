@@ -19,15 +19,15 @@ Paste one of these to your agent:
 ```
 
 ```
-Install the APIYI skill from https://github.com/apiyi/skills and guide me to configure an API key.
+Install the APIYI skill from https://github.com/apiyi-com/skills and guide me to configure an API key.
 ```
 
 Or do it yourself:
 
 | Agent | Command |
 |---|---|
-| Claude Code, Cursor, Codex and other Agent Skills tools | `npx skills add https://docs.apiyi.com` (or `npx skills add apiyi/skills`) |
-| OpenClaw | `openclaw skills install git:apiyi/skills` or `git clone https://github.com/apiyi/skills ~/.openclaw/workspace/skills/apiyi` |
+| Claude Code, Cursor, Codex and other Agent Skills tools | `npx skills add https://docs.apiyi.com` (or `npx skills add apiyi-com/skills`) |
+| OpenClaw | `openclaw skills install git:apiyi-com/skills` or `git clone https://github.com/apiyi-com/skills ~/.openclaw/workspace/skills/apiyi` |
 | Anything else | copy `SKILL.md` into the agent's skills directory |
 
 ## Self-check
@@ -40,7 +40,7 @@ python3 scripts/apiyi.py --chat "Hello" -m gpt-5.4-mini
 
 Python 3.8+, standard library only. Exit codes and statuses are listed in
 `references/troubleshooting.md`. There is also a Node CLI with more commands:
-`npx apiyi@latest check` (source: https://github.com/apiyi/cli).
+`npx apiyi@latest check` (source: https://github.com/apiyi-com/cli).
 
 ## Layout
 
