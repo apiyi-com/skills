@@ -32,7 +32,7 @@ metadata:
   developer_kit: "https://docs.apiyi.com/developer-kit"
   cli: "npx apiyi@latest"
   source_repo: "github.com/apiyi-com/skills"
-  last_reviewed: "2026-09-03"
+  last_reviewed: "2026-10-03"
   openclaw:
     emoji: "🔑"
     primaryEnv: "APIYI_API_KEY"
@@ -102,8 +102,7 @@ Same API on every host; pick by network position, not by feature.
 
 | Host | Use for |
 |---|---|
-| `api.apiyi.com` | Default. Optimised for mainland China. |
-| `vip.apiyi.com` | Clients outside mainland China; direct to backend, lowest latency. |
+| `api.apiyi.com` | Default for everyone, in and outside mainland China. |
 | `b.apiyi.com` | Backup / enterprise. |
 | `api-cf.apiyi.com` | Cloudflare CDN. **Text only**, hard ceiling around 100 seconds. Never use it for image, video, or long reasoning calls. |
 
@@ -156,7 +155,7 @@ Do this before any other call, and do it in this order:
 | `ready` | `/v1/models` returned 200 | Key works. Say how many models are visible and ask what to build. |
 | `no_key` | No key found in any location | Ask for a key from `https://api.apiyi.com/token`, then re-check. |
 | `invalid_key` | 401 or 403 | Key is wrong, disabled, or exhausted. Ask the user to re-copy it from the console. |
-| `network_error` | Timeout, DNS failure, or 5xx | Retry once; if it persists, try `vip.apiyi.com` (outside mainland China) or `b.apiyi.com`. |
+| `network_error` | Timeout, DNS failure, or 5xx | Retry once; if it persists, try `b.apiyi.com`. |
 
 A normal `sk-` key **cannot read the balance**, so there is no `no_balance`
 status here. A 429 may mean either rate limiting or an empty balance; do not
@@ -175,10 +174,14 @@ guess which. Point the user at `https://api.apiyi.com/account/profile` instead.
 | `/v1/images/edits` | POST | OpenAI Image edits |
 | `/v1/rerank` | POST | Rerank |
 | `/v1/models` | GET | List models available to your key |
+| `/v1/videos` | POST | Video submit, OpenAI-shaped |
+| `/hailuo/v2/video_generation` | POST | Video submit, MiniMax Hailuo |
 
-Video models do **not** use a single unified path. Each vendor family has its
-own submit-and-poll paths. Read the model's own documentation page before
-integrating video.
+Video is split across paths rather than unified. `/v1/videos` is the
+OpenAI-shaped submit path; some families keep their own, as MiniMax Hailuo does.
+The two rows above are **submit** paths only — polling and result retrieval
+differ per family. Check the model's `endpoints` in the registry and its own
+documentation page before integrating video.
 
 ## Model IDs — read this before you type a model name
 
@@ -526,7 +529,7 @@ after the domain for English.
 
 ## Freshness
 
-Last reviewed 2026-09-03. Every model ID, price, group name and quota figure on
+Last reviewed 2026-10-03. Every model ID, price, group name and quota figure on
 this gateway is volatile; this file deliberately states conventions and
 mechanisms rather than quoting them. If you find a number here that is not the
 quota conversion (500,000 = 1 USD), the balance validity period (365 days), or a
