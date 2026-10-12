@@ -45,8 +45,9 @@ Replace `THE_KEY` with the real key. Never echo the full key back into the chat;
 ## What a normal key cannot do
 
 An `sk-` key can call models but **cannot read the balance**. Balance, logs and
-token management use a separate system token (from the bottom of
-https://api.apiyi.com/account/profile, passed bare with no `Bearer` prefix).
+token management use a separate personal access token (starts with `nap_`,
+created at https://api.apiyi.com/account/profile under Account Options ->
+Personal Access Tokens; legacy system tokens retire on 2026-11-11 (UTC+8)).
 So there is no `no_balance` status. If a call returns 429, tell the user it is
 either rate limiting or an empty balance and point them at
 https://api.apiyi.com/account/profile rather than guessing.

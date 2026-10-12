@@ -102,8 +102,7 @@ Same API on every host; pick by network position, not by feature.
 
 | Host | Use for |
 |---|---|
-| `api.apiyi.com` | Default. Optimised for mainland China. |
-| `vip.apiyi.com` | Clients outside mainland China; direct to backend, lowest latency. |
+| `api.apiyi.com` | Default for everyone, in and outside mainland China. |
 | `b.apiyi.com` | Backup / enterprise. |
 | `api-cf.apiyi.com` | Cloudflare CDN. **Text only**, hard ceiling around 100 seconds. Never use it for image, video, or long reasoning calls. |
 
@@ -122,11 +121,14 @@ Read the key from the environment — the convention across APIYI's own examples
 is `APIYI_API_KEY`. Never hardcode a key, never commit one.
 
 **A second, different credential exists.** The account APIs (balance, logs,
-token management) use a *system token* obtained from the bottom of
-`https://api.apiyi.com/account/profile` by re-entering the account password.
-It is passed **bare in the `Authorization` header with no `Bearer` prefix**, and
-it carries full account privileges. Do not confuse the two, and do not put a
-system token in application code.
+token management) use a *personal access token* (starts with `nap_`), created at
+`https://api.apiyi.com/account/profile` under Account Options -> Personal Access
+Tokens. Each token carries only the permissions ticked at creation (balance needs
+"Profile: Read", logs need "Usage & personal records: Read"), and can have an
+expiry and an IP allowlist. It goes in the `Authorization` header, with or
+without a `Bearer` prefix. It cannot call models. Do not confuse the two, and do
+not put it in application code. Legacy *system tokens* retire on 2026-11-11
+(UTC+8) and then return 401 `ACCESS_TOKEN_LEGACY_RETIRED`.
 
 ### Key setup and self-check
 
@@ -156,7 +158,7 @@ Do this before any other call, and do it in this order:
 | `ready` | `/v1/models` returned 200 | Key works. Say how many models are visible and ask what to build. |
 | `no_key` | No key found in any location | Ask for a key from `https://api.apiyi.com/token`, then re-check. |
 | `invalid_key` | 401 or 403 | Key is wrong, disabled, or exhausted. Ask the user to re-copy it from the console. |
-| `network_error` | Timeout, DNS failure, or 5xx | Retry once; if it persists, try `vip.apiyi.com` (outside mainland China) or `b.apiyi.com`. |
+| `network_error` | Timeout, DNS failure, or 5xx | Retry once; if it persists, try `b.apiyi.com`. |
 
 A normal `sk-` key **cannot read the balance**, so there is no `no_balance`
 status here. A 429 may mean either rate limiting or an empty balance; do not
@@ -435,12 +437,15 @@ information is gone.
 
 ## Account, balance and logs
 
-These use the **system token**, bare, with no `Bearer` prefix.
+These use a **personal access token** (`nap_...`), not an `sk-` key.
 
 ```bash
 curl -s https://api.apiyi.com/api/user/self \
-  -H "Authorization: your-system-token" -H "Accept: application/json"
+  -H "Authorization: $APIYI_ACCESS_TOKEN" -H "Accept: application/json"
 ```
+
+A 403 `ACCESS_TOKEN_SCOPE_DENIED` means the token lacks the permission for that
+endpoint; permissions cannot be edited, so a new token is needed.
 
 The response carries `quota` (remaining) and `used_quota`. The conversion is
 **500,000 quota units = 1 USD**, so divide by 500000 to get dollars.
