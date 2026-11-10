@@ -1,7 +1,7 @@
 ---
 name: apiyi
 description: >-
-  Call 400+ AI models (GPT, Claude, Gemini, Grok, DeepSeek, Qwen, Kimi, GLM,
+  Call 200+ curated AI models (GPT, Claude, Gemini, Grok, DeepSeek, Qwen, Kimi, GLM,
   MiniMax, plus image, video, embedding and rerank models) through APIYI's single
   OpenAI-compatible gateway at api.apiyi.com. Use this when the user mentions
   APIYI, API易, api.apiyi.com or an APIYI_API_KEY; wants one API key across
@@ -40,7 +40,7 @@ metadata:
       bins: ["python3"]
 ---
 
-# APIYI — one key, 400+ models, OpenAI/Anthropic/Google-compatible gateway
+# APIYI — one key, 200+ curated models, OpenAI/Anthropic/Google-compatible gateway
 
 APIYI is an AI API gateway. You point an existing SDK's `base_url` at
 `api.apiyi.com`, use an APIYI key, and call models from OpenAI, Anthropic,
